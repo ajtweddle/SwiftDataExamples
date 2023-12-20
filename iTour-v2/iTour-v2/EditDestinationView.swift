@@ -1,8 +1,8 @@
 //
 //  EditDestinationView.swift
-//  iTour
+//  iTour-v2
 //
-//  Created by Allan Tweddle on 15/11/2023.
+//  Created by Allan Tweddle on 20/12/2023.
 //
 
 import PhotosUI
@@ -10,10 +10,10 @@ import SwiftData
 import SwiftUI
 
 struct EditDestinationView: View {
+    @Environment(\.modelContext) private var modelContext
     @Bindable var destination: Destination
     @State private var newSightName = ""
     @State private var photosItem: PhotosPickerItem?
-    @Environment(\.modelContext) private var modelContext
     var sortedSights: [Sight] {
         destination.sights.sorted {
             $0.name < $1.name
@@ -76,7 +76,6 @@ struct EditDestinationView: View {
             let sight = Sight(name: newSightName)
             destination.sights.append(sight)
             newSightName = ""
-            try? modelContext.save()
         }
     }
 
@@ -85,7 +84,6 @@ struct EditDestinationView: View {
             let sight = sortedSights[index]
             modelContext.delete(sight)
         }
-        try? modelContext.save()
     }
 }
 
